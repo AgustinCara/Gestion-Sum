@@ -1,0 +1,31 @@
+﻿@model IEnumerable<GestionSUM.Models.Reserva>
+
+<h2>Historial de reservas canceladas</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Horario</th>
+            <th>Usuario</th>
+            <th>Depto</th>
+            <th>Motivo</th>
+            <th>Cancelada el</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Fecha.ToShortDateString()</td>
+                <td>@r.Turno.MomentoDelDia</td>
+                <td>@r.Usuario?.Nombre</td>
+                <td>@r.Usuario?.Departamento</td>
+                <td>@r.MotivoCancelacion</td>
+                <td>@r.FechaCancelacion?.ToString("dd/MM/yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

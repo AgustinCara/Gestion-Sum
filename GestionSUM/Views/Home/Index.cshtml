@@ -1,0 +1,74 @@
+﻿@using GestionSUM.Services
+@using GestionSUM.Models
+
+@model IEnumerable<GestionSUM.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Gestión de SUM</h1>
+    <p>Edificio Monte Grande</p>
+
+    <div class="mt-4">
+
+        @if (UsuarioActual.Rol == RolUsuario.Administrador)
+        {
+
+
+            <a asp-controller="Usuarios" asp-action="Index" class="btn btn-primary btn-lg m-2">
+                Usuarios
+            </a>
+        }
+
+        <a asp-controller="Reservas" asp-action="Index" class="btn btn-success btn-lg m-2">
+            Reservas
+        </a>
+    </div>
+
+    <div class="mt-3">
+        
+        <a asp-controller="Reservas"
+        asp-action="Create"
+        class="btn btn-warning btn-lg">
+            📅 Reservar ahora
+        </a>
+
+    </div>
+
+</div>
+
+<hr />
+
+<h3>📅 Próximas reservas del SUM</h3>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No hay reservas próximas.
+    </div>
+}
+else
+{
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Horario</th>
+                <th>Usuario</th>
+                <th>Depto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td>@r.Fecha.ToString("dd/MM/yyyy")</td>
+                    <td>@r.Usuario?.Nombre</td>
+                    <td>@r.Usuario?.Departamento</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,26 @@
+﻿@model GestionSUM.Models.Reserva
+
+<h2>Cancelar reserva</h2>
+
+<div class="alert alert-warning">
+    La reserva quedará registrada como cancelada.
+</div>
+
+<ul class="list-group mb-3">
+    <li class="list-group-item"><b>Fecha:</b> @Model.Fecha.ToShortDateString()</li>
+    <li class="list-group-item"><b>Usuario:</b> @Model.Usuario?.Nombre</li>
+</ul>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Motivo de cancelación</label>
+        <textarea name="motivoCancelacion"
+                  class="form-control"
+                  required></textarea>
+    </div>
+
+    <button class="btn btn-danger">Confirmar cancelación</button>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</form>

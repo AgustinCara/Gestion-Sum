@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Calendario del SUM";
+}
+
+<h2>Calendario del SUM</h2>
+
+<div id="calendar"></div>
+
+<!-- Modal info reserva -->
+<div class="modal fade" id="reservaModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Reserva del SUM</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p id="modalContenido"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'es',
+                height: 'auto',
+
+                // 👉 Click en día libre
+                dateClick: function (info) {
+                    window.location.href =
+                        '/Reservas/Create?fecha=' + info.dateStr;
+                },
+
+                // 👉 Click en reserva ocupada
+                eventClick: function (info) {
+                    info.jsEvent.preventDefault();
+
+                    let evento = info.event;
+
+                    let contenido =
+                        '<strong>Fecha:</strong> ' + evento.start.toLocaleDateString() + '<br>' +
+                        '<strong>Horario:</strong> ' +
+                        evento.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
+                        ' - ' +
+                        evento.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
+                        '<br><br>' +
+                        '<strong>Estado:</strong> OCUPADO<br><br>' +
+                        evento.title;
+
+                    document.getElementById('modalContenido').innerHTML = contenido;
+
+                    var modal = new bootstrap.Modal(
+                        document.getElementById('reservaModal')
+                    );
+
+                    modal.show();
+                },
+
+
+                events: '/Reservas/ReservasCalendario'
+            });
+
+            calendar.render();
+        });
+    </script>
+}

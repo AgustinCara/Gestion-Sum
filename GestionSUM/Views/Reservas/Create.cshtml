@@ -1,0 +1,56 @@
+﻿@model GestionSUM.Models.Reserva
+
+@{
+    ViewData["Title"] = "Nueva Reserva";
+}
+
+<h1>Nueva Reserva</h1>
+
+@if (ViewData.ModelState.ErrorCount > 0)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+}
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Fecha"></label>
+        @* <input asp-for="Fecha" class="form-control" type="date" /> *@
+        <input asp-for="Fecha" type="date" class="form-control" />
+        <span asp-validation-for="Fecha" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Turno</label>
+        <select asp-for="TurnoId"
+                class="form-select"
+                asp-items="ViewBag.Turnos">
+            <option value="">Seleccione un turno</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="UsuarioId">Usuario</label>
+        <select asp-for="UsuarioId"
+                asp-items="ViewBag.Usuarios"
+                class="form-control">
+            <option value="">-- Seleccionar --</option>
+        </select>
+        <span asp-validation-for="UsuarioId" class="text-danger"></span>
+    </div>
+
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">Reservar</button>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+
+}

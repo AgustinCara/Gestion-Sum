@@ -1,0 +1,82 @@
+﻿@using GestionSUM.Services
+@using GestionSUM.Models
+
+@model IEnumerable<GestionSUM.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Reservas SUM";
+}
+
+<h1>Reservas del SUM</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nueva Reserva</a>
+</p>
+
+@if (UsuarioActual.Rol == RolUsuario.Administrador)
+{
+    <a asp-action="Historial"
+       class="btn btn-outline-dark mb-3">
+        📄 Historial de cancelaciones
+    </a>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Horario</th>
+            <th>Usuario</th>
+            <th>Depto</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            var inicioReserva = r.Fecha.Date + r.Turno.HoraInicio;
+            var horasFaltantes = (inicioReserva - DateTime.Now).TotalHours;
+
+            <tr>
+                <td>@r.Fecha.ToShortDateString()</td>
+
+                <td>
+                    @r.Turno.MomentoDelDia
+                    (@r.Turno.HoraInicio.ToString(@"hh\:mm")
+                    -
+                    @r.Turno.HoraFin.ToString(@"hh\:mm"))
+                </td>
+
+                <td>@r.Usuario?.Nombre</td>
+                <td>@r.Usuario?.Departamento</td>
+
+                <td>
+                    @if (UsuarioActual.Rol == RolUsuario.Administrador)
+                    {
+                        <a asp-action="Delete" asp-route-id="@r.Id" class="btn btn-sm btn-danger">
+                            Cancelar
+                        </a>
+                    }
+                    else if (
+                    UsuarioActual.Rol == RolUsuario.Vecino &&
+                    r.UsuarioId == UsuarioActual.UsuarioId &&
+                    horasFaltantes >= 2
+                    )
+                    {
+                        <a asp-action="Delete" asp-route-id="@r.Id" class="btn btn-sm btn-danger">
+                            Cancelar
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
