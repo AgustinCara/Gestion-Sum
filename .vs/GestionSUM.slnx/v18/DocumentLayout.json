@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|c:\\users\\agusc\\onedrive\\documentos\\proyectos\\gestionsum\\gestionsum\\gestionsum\\views\\reservas\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|solutionrelative:gestionsum\\views\\reservas\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|c:\\users\\agusc\\onedrive\\documentos\\proyectos\\gestionsum\\gestionsum\\gestionsum\\views\\reservas\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|solutionrelative:gestionsum\\views\\reservas\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|c:\\users\\agusc\\onedrive\\documentos\\proyectos\\gestionsum\\gestionsum\\gestionsum\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|solutionrelative:gestionsum\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|c:\\users\\agusc\\onedrive\\documentos\\proyectos\\gestionsum\\gestionsum\\gestionsum\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -13,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|c:\\users\\agusc\\onedrive\\documentos\\proyectos\\gestionsum\\gestionsum\\gestionsum\\controllers\\reservascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|solutionrelative:gestionsum\\controllers\\reservascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|c:\\users\\agusc\\onedrive\\documentos\\proyectos\\gestionsum\\gestionsum\\gestionsum\\gestionsum.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A96314CE-913F-FE3A-C898-B1A9E8AEC229}|GestionSUM\\GestionSUM.csproj|solutionrelative:gestionsum\\gestionsum.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +30,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GestionSUM",
-              "DocumentMoniker": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\GestionSUM.csproj",
-              "RelativeDocumentMoniker": "GestionSUM\\GestionSUM.csproj",
-              "ToolTip": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\GestionSUM.csproj",
-              "RelativeToolTip": "GestionSUM\\GestionSUM.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-01-03T03:04:04.203Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ReservasController.cs",
-              "DocumentMoniker": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Controllers\\ReservasController.cs",
-              "RelativeDocumentMoniker": "GestionSUM\\Controllers\\ReservasController.cs",
-              "ToolTip": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Controllers\\ReservasController.cs",
-              "RelativeToolTip": "GestionSUM\\Controllers\\ReservasController.cs",
-              "ViewState": "AgIAAL4AAAAAAAAAAAApwNgAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-03T03:20:28.118Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Views\\Reservas\\Create.cshtml",
-              "RelativeDocumentMoniker": "GestionSUM\\Views\\Reservas\\Create.cshtml",
-              "ToolTip": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Views\\Reservas\\Create.cshtml",
-              "RelativeToolTip": "GestionSUM\\Views\\Reservas\\Create.cshtml",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABEAAAAnAAAAAAAAAA==",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Views\\Reservas\\Index.cshtml",
+              "RelativeDocumentMoniker": "GestionSUM\\Views\\Reservas\\Index.cshtml",
+              "ToolTip": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Views\\Reservas\\Index.cshtml",
+              "RelativeToolTip": "GestionSUM\\Views\\Reservas\\Index.cshtml",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAAAE8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-01-03T03:20:18.189Z",
+              "WhenOpened": "2026-02-13T18:56:00.424Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Views\\Reservas\\Create.cshtml",
+              "RelativeDocumentMoniker": "GestionSUM\\Views\\Reservas\\Create.cshtml",
+              "ToolTip": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Views\\Reservas\\Create.cshtml",
+              "RelativeToolTip": "GestionSUM\\Views\\Reservas\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-13T18:54:59.981Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "GestionSUM\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "GestionSUM\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBwAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T16:00:32.635Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "GestionSUM\\Views\\Home\\Index.cshtml",
               "ToolTip": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "GestionSUM\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAF8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-01-03T03:19:04.762Z",
+              "WhenOpened": "2026-02-13T15:53:49.547Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ReservasController.cs",
+              "DocumentMoniker": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Controllers\\ReservasController.cs",
+              "RelativeDocumentMoniker": "GestionSUM\\Controllers\\ReservasController.cs",
+              "ToolTip": "C:\\Users\\agusc\\OneDrive\\Documentos\\Proyectos\\GestionSUM\\GestionSUM\\GestionSUM\\Controllers\\ReservasController.cs",
+              "RelativeToolTip": "GestionSUM\\Controllers\\ReservasController.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAASwCYAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T12:05:12.633Z",
               "EditorCaption": ""
             }
           ]

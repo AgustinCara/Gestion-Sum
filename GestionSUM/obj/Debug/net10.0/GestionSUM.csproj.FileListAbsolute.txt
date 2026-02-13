@@ -297,3 +297,4 @@ C:\Users\agusc\OneDrive\Documentos\Proyectos\GestionSUM\GestionSUM\GestionSUM\ob
 C:\Users\agusc\OneDrive\Documentos\Proyectos\GestionSUM\GestionSUM\GestionSUM\obj\Debug\net10.0\GestionSUM.pdb
 C:\Users\agusc\OneDrive\Documentos\Proyectos\GestionSUM\GestionSUM\GestionSUM\obj\Debug\net10.0\GestionSUM.genruntimeconfig.cache
 C:\Users\agusc\OneDrive\Documentos\Proyectos\GestionSUM\GestionSUM\GestionSUM\obj\Debug\net10.0\ref\GestionSUM.dll
+C:\Users\agusc\OneDrive\Documentos\Proyectos\GestionSUM\GestionSUM\GestionSUM\obj\Debug\net10.0\GestionSUM.sourcelink.json

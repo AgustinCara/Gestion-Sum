@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GestionSUM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+947782e38267ceb2a2073c5bd74d46dca7214c29")]
 [assembly: System.Reflection.AssemblyProductAttribute("GestionSUM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GestionSUM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

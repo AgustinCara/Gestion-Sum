@@ -32,20 +32,23 @@ namespace GestionSUM.Controllers
 
         public IActionResult Create(DateTime? fecha)
         {
+            var reserva = new Reserva();
 
             ViewBag.Usuarios = new SelectList(
                 _context.Usuarios.ToList(),
                 "Id",
-                "Nombre"
+                "Nombre",
+                reserva.UsuarioId
             );
 
             ViewBag.Turnos = new SelectList(
                 _context.Turnos.ToList(),
                 "Id",
-                "MomentoDelDia"
+                "MomentoDelDia",
+                reserva.TurnoId
             );
 
-            var reserva = new Reserva();
+            //var reserva = new Reserva();
 
             if (fecha.HasValue)
                 reserva.Fecha = fecha.Value;
@@ -182,6 +185,7 @@ namespace GestionSUM.Controllers
 
             var reservasCanceladas = await _context.Reservas
                 .Include(r => r.Usuario)
+                .Include(r => r.Turno)
                 .Where(r => r.Cancelada)
                 .OrderByDescending(r => r.FechaCancelacion)
                 .ToListAsync(); 

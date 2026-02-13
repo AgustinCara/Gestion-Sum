@@ -18,7 +18,10 @@
         {
             <tr>
                 <td>@r.Fecha.ToShortDateString()</td>
-                <td>@r.Turno.MomentoDelDia</td>
+                <td>@r.Turno?.MomentoDelDia
+                    @r.Turno?.HoraInicio
+                    @r.Turno?.HoraFin
+                </td>
                 <td>@r.Usuario?.Nombre</td>
                 <td>@r.Usuario?.Departamento</td>
                 <td>@r.MotivoCancelacion</td>

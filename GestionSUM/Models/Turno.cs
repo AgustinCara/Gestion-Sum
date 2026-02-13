@@ -6,8 +6,8 @@ namespace GestionSUM.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public string MomentoDelDia { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Debe seleccionar un usuario")]
+        public string? MomentoDelDia { get; set; } = string.Empty;
 
         [Required]
         public TimeSpan HoraInicio { get; set; }

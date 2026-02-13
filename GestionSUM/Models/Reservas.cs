@@ -13,17 +13,17 @@ namespace GestionSUM.Models
         [DataType(DataType.Date)]
         public DateTime Fecha { get; set; }
 
-        [Required]
-        public int UsuarioId { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar un usuario")]
+        public int? UsuarioId { get; set; }
         public Usuario? Usuario { get; set; }
 
         public bool Cancelada { get; set; } = false;
         public string? MotivoCancelacion { get; set; }
         public DateTime? FechaCancelacion { get; set; }
 
-        [Required]
-        public int TurnoId { get; set; }
-        public Turno Turno { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar un turno")]
+        public int? TurnoId { get; set; }
+        public Turno? Turno { get; set; }
     }
 
 }

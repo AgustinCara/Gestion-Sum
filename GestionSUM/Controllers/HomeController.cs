@@ -21,10 +21,11 @@ namespace GestionSUM.Controllers
 
             var proximasReservas = await _context.Reservas
                 .Include(r => r.Usuario)
-                .Where(r => r.Fecha >= hoy)
+                .Include(r => r.Turno)
+                .Where(r => r.Fecha >= hoy && !r.Cancelada)
                 .OrderBy(r => r.Fecha)
-                .ThenBy(r => r.Turno)
-                .Take(5) // mostramos solo las próximas 5
+                .ThenBy(r => r.Turno.HoraInicio)
+                .Take(5)
                 .ToListAsync();
 
             return View(proximasReservas);
