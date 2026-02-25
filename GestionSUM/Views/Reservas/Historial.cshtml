@@ -1,6 +1,13 @@
-﻿@model IEnumerable<GestionSUM.Models.Reserva>
+﻿@using GestionSUM.Services
+@using GestionSUM.Models
 
-<h2>Historial de reservas canceladas</h2>
+@model IEnumerable<GestionSUM.Models.Reserva>
+
+<div class="card bg-success text-white shadow-sm mb-4">
+    <div class="card-body text-center">
+        <h1 class="fw-bolder mb-1">Historial de reservas canceladas</h1>
+    </div>
+</div>
 
 <table class="table table-striped">
     <thead>
@@ -32,3 +39,10 @@
 </table>
 
 <a asp-action="Index" class="btn btn-secondary">Volver</a>
+
+<style>
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f4f6f9, #e9ecef);
+    }
+</style>

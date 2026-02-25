@@ -2,9 +2,23 @@
     ViewData["Title"] = "Calendario del SUM";
 }
 
-<h2>Calendario del SUM</h2>
+@* <h2>Calendario del SUM</h2> *@
+
+<div class="card bg-success text-white shadow-sm mb-4">
+    <div class="card-body text-center">
+        <h1 class="fw-bolder mb-1">Calendario de Reservas</h1>
+    </div>
+</div>
 
 <div id="calendar"></div>
+
+
+    <a class="btn btn-secondary" 
+        asp-area="" 
+        asp-controller="Home" 
+        asp-action="Index">
+        Volver
+    </a>
 
 <!-- Modal info reserva -->
 <div class="modal fade" id="reservaModal" tabindex="-1" aria-hidden="true">
@@ -30,7 +44,6 @@
     </div>
 </div>
 
-
 @section Scripts {
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
@@ -45,13 +58,31 @@
                 locale: 'es',
                 height: 'auto',
 
-                // 👉 Click en día libre
+                headerToolbar: {
+                    left: 'title',
+                    right: 'prev,next'
+                },
+
+                titleformat: {
+                    year: 'numeric',
+                    month: 'long'
+                },
+
+                // titleDidMount: function (arg) {
+                //       arg.el.innerText = arg.el.innerText.replace(' de ', ' ').toUpperCase();
+                //   },
+
+                validRange: {
+                    start: new Date().toISOString().split('T')[0]
+                 },
+
+                // Click en día libre
                 dateClick: function (info) {
                     window.location.href =
                         '/Reservas/Create?fecha=' + info.dateStr;
                 },
 
-                // 👉 Click en reserva ocupada
+                // Click en reserva ocupada
                 eventClick: function (info) {
                     info.jsEvent.preventDefault();
 
@@ -84,3 +115,29 @@
         });
     </script>
 }
+
+<style>
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f4f6f9, #e9ecef);
+    }
+    /* Bordes del calendario */
+    .fc-theme-standard td,
+    .fc-theme-standard th {
+        border: 2px solid #dee2e6; /* grosor y color */
+    }
+
+    /* Separación entre semanas */
+    .fc-theme-standard .fc-scrollgrid {
+        border: 2px solid #adb5bd;
+    }
+
+    /* Bordes de cada día */
+    .fc-daygrid-day-frame {
+        border: 2px solid #adb5bd;
+    }
+
+    .fc-toolbar-title {
+        font-family: 'Poppins', sans-serif;
+    }
+</style>

@@ -4,7 +4,12 @@
     ViewData["Title"] = "Usuarios";
 }
 
-<h1>Usuarios</h1>
+@* <h1>Usuarios</h1> *@
+<div class="card bg-success text-white shadow-sm mb-4">
+    <div class="card-body text-center">
+        <h1 class="fw-bolder mb-1">Usuarios</h1>
+    </div>
+</div>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Nuevo Usuario</a>
@@ -35,3 +40,10 @@
         }
     </tbody>
 </table>
+
+<style>
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f4f6f9, #e9ecef);
+    }
+</style>

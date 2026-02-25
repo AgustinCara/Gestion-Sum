@@ -19,12 +19,14 @@ namespace GestionSUM.Controllers
         // GET: Reservas
         public async Task<IActionResult> Index()
         {
+
             var reservas = _context.Reservas
                 .Include(r => r.Turno)
                 .Include(r => r.Usuario)
                 .Where(r => !r.Cancelada);
 
             return View(await reservas.ToListAsync());
+
         }
 
         // GET: Reservas/Create
@@ -53,6 +55,7 @@ namespace GestionSUM.Controllers
             if (fecha.HasValue)
                 reserva.Fecha = fecha.Value;
 
+
             return View(reserva);
         }
 
@@ -62,6 +65,27 @@ namespace GestionSUM.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Reserva reserva)
         {
+
+            if (reserva.Fecha.Date < DateTime.Today)
+            {
+                ModelState.AddModelError("", "No se pueden crear reservas en fechas pasadas.");
+            }
+
+            // Obtener el turno para conocer la hora
+            var turno = _context.Turnos.FirstOrDefault(t => t.Id == reserva.TurnoId);
+
+            if (turno != null)
+            {
+                var inicioReserva = reserva.Fecha.Date + turno.HoraInicio;
+                var horasFaltantes = (inicioReserva - DateTime.Now).TotalHours;
+
+                if (horasFaltantes < 6)
+                {
+                    ModelState.AddModelError("", "No se puede reservar con menos de 6 horas de anticipación.");
+                }
+            }
+
+
             bool ocupado = _context.Reservas.Any(r =>
                 r.Fecha == reserva.Fecha &&
                 r.TurnoId == reserva.TurnoId &&
@@ -176,6 +200,7 @@ namespace GestionSUM.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
         public async Task<IActionResult> Historial()
         {
             if (UsuarioActual.Rol != RolUsuario.Administrador)
@@ -183,12 +208,25 @@ namespace GestionSUM.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+
+            var hoy = DateTime.Today;
+            var inicioMes = new DateTime(hoy.Year, hoy.Month, 1);
+            var finMes = inicioMes.AddMonths(1);
+
+            ViewBag.ReservasCanceladasMes = _context.Reservas
+                .Count(r =>
+                    r.Fecha >= inicioMes &&
+                    r.Fecha < finMes &&
+                    r.Cancelada
+                );
+
+
             var reservasCanceladas = await _context.Reservas
                 .Include(r => r.Usuario)
                 .Include(r => r.Turno)
                 .Where(r => r.Cancelada)
                 .OrderByDescending(r => r.FechaCancelacion)
-                .ToListAsync(); 
+                .ToListAsync();
 
             return View(reservasCanceladas);
         }

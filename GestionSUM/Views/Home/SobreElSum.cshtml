@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Sobre el SUM";
+}
+
+<div class="container">
+
+    <!-- TÍTULO -->
+    <div class="card bg-primary text-white shadow-sm mb-4">
+        <div class="card-body text-center">
+            <h1 class="fw-bold mb-1">Sobre el SUM</h1>
+            <p class="mb-0">Información general, equipamiento y reglamento</p>
+        </div>
+    </div>
+
+    <!-- INFO GENERAL -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="fw-bold mb-3">🏢 Información General</h4>
+            <p>
+                El Salón de Usos Múltiples (SUM) está destinado a la realización de
+                eventos familiares, reuniones y actividades sociales.
+            </p>
+            <ul>
+                <li><strong>Capacidad:</strong> Hasta 40 personas</li>
+                <li><strong>Horarios:</strong> Turno dia 10:00  a 18:00. Turno noche 19:00 a 02:00.</li>
+                <li><strong>Días disponibles:</strong> Lunes a Domingo</li>
+                <li><strong>Reservas:</strong> Deben realizarse con minimo 6 horas de anticipacion.</li>
+                <li><strong>Cancelaciones:</strong> Deben realizarse con minimo 2 horas de anticipación.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- EQUIPAMIENTO -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="fw-bold mb-3">🪑 Equipamiento Disponible</h4>
+
+            <div class="row text-center">
+                <div class="col-md-3 mb-3">🪑<br />Mesas y sillas</div>
+                <div class="col-md-3 mb-3">❄️<br />Aire acondicionado</div>
+                <div class="col-md-3 mb-3">🍖<br />Parrilla</div>
+                <div class="col-md-3 mb-3">📺<br />TV / Proyector</div>
+                <div class="col-md-3 mb-3">🧊<br />Heladera</div>
+                <div class="col-md-3 mb-3">🍽️<br />Cocina equipada</div>
+                <div class="col-md-3 mb-3">🚻<br />Baños</div>
+                <div class="col-md-3 mb-3">🔊<br />Equipo de sonido</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REGLAS -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="fw-bold mb-3">📜 Reglas de Uso</h4>
+            <ul>
+                <li>No se permite música luego de las 00:00 hs los dias de semana.</li>
+                <li>El SUM debe entregarse limpio y ordenado.</li>
+                <li>Está prohibido fumar dentro del salón.</li>
+                <li>Los daños ocasionados serán responsabilidad del solicitante.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- GALERÍA -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <h4 class="fw-bold mb-3">📸 Galería</h4>
+
+            <div id="carouselSUM" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner rounded">
+
+                    <div class="carousel-item active">
+                        <img src="~/img/sum/sum1.jpg" class="d-block w-100" alt="SUM 1">
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="~/img/sum/sum2.jpg" class="d-block w-100" alt="SUM 2">
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="~/img/sum/sum3.jpg" class="d-block w-100" alt="SUM 3">
+                    </div>
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselSUM" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselSUM" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

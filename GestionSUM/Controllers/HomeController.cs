@@ -30,5 +30,10 @@ namespace GestionSUM.Controllers
 
             return View(proximasReservas);
         }
+
+        public IActionResult SobreElSum()
+        {
+            return View();
+        }
     }
 }

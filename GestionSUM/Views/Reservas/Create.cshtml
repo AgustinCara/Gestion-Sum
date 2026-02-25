@@ -4,7 +4,26 @@
     ViewData["Title"] = "Nueva Reserva";
 }
 
-<h1>Nueva Reserva</h1>
+@* <h1>Nueva Reserva</h1> *@
+<div class="card bg-primary text-white shadow-sm mb-4">
+    <div class="card-body text-center">
+        <h1 class="fw-bold mb-1">Nueva Reserva</h1>
+    </div>
+</div>
+
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h4 class="fw-bold mb-3">🏢 Información General</h4>
+        <ul>
+            <li><strong>Capacidad:</strong> Hasta 40 personas</li>
+            <li><strong>Horarios:</strong> Turno dia 10:00  a 18:00. Turno noche 19:00 a 02:00.</li>
+            <li><strong>Días disponibles:</strong> Lunes a Domingo</li>
+            <li><strong>Reservas:</strong> Deben realizarse con minimo 6 horas de anticipacion.</li>
+            <li><strong>Cancelaciones:</strong> Deben realizarse con minimo 2 horas de anticipación.</li>
+        </ul>
+    </div>
+</div>
 
 @if (ViewData.ModelState.ErrorCount > 0)
 {
