@@ -1,15 +1,29 @@
-# Visual Studio
+# =========================
+# Visual Studio / IDE
+# =========================
 .vs/
 
+# =========================
 # Build results
-bin/
-obj/
+# =========================
+GestionSUM/bin/
+GestionSUM/obj/
 
-# ASP.NET
+# =========================
+# ASP.NET / .NET
+# =========================
 *.dll
 *.exe
 *.pdb
 
-# User files
+# =========================
+# User-specific files
+# =========================
 *.user
 *.suo
+*.cache
+
+# =========================
+# Logs / temp
+# =========================
+*.log
