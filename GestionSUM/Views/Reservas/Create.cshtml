@@ -1,10 +1,15 @@
 ﻿@model GestionSUM.Models.Reserva
 
+
+
+
 @{
     ViewData["Title"] = "Nueva Reserva";
 }
 
 @* <h1>Nueva Reserva</h1> *@
+<div class="container-fluid px-4 px-md-5 mt-5">
+
 <div class="card bg-primary text-white shadow-sm mb-4">
     <div class="card-body text-center">
         <h1 class="fw-bold mb-1">Nueva Reserva</h1>
@@ -12,7 +17,7 @@
 </div>
 
 
-<div class="card shadow-sm mb-4">
+@* <div class="card shadow-sm mb-4">
     <div class="card-body">
         <h4 class="fw-bold mb-3">🏢 Información General</h4>
         <ul>
@@ -23,7 +28,31 @@
             <li><strong>Cancelaciones:</strong> Deben realizarse con minimo 2 horas de anticipación.</li>
         </ul>
     </div>
-</div>
+</div> *@
+
+
+@{
+    var sum = ViewBag.SumInfo as GestionSUM.Models.SumInfo;
+}
+
+@if (sum != null)
+{
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="fw-bold mb-3">🏢 Información General</h4>
+
+            <p>@sum.InformacionGeneral</p>
+
+            <ul>
+                <li><strong>Capacidad:</strong> @sum.Capacidad personas</li>
+                <li><strong>Horarios:</strong> Turno dia 10:00  a 18:00. Turno noche 19:00 a 02:00.</li>
+                <li><strong>Días disponibles:</strong> Lunes a Domingo</li>
+                <li><strong>Reservas:</strong> Con mínimo 6 horas de anticipación</li>
+                <li><strong>Cancelaciones:</strong> Con mínimo 2 horas de anticipación</li>
+            </ul>
+        </div>
+    </div>
+}
 
 @if (ViewData.ModelState.ErrorCount > 0)
 {
@@ -61,12 +90,12 @@
         <span asp-validation-for="UsuarioId" class="text-danger"></span>
     </div>
 
-
     <br />
 
     <button type="submit" class="btn btn-primary">Reservar</button>
-    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+    <a asp-action="Calendario" class="btn btn-secondary">Volver</a>
 </form>
+</div>
 
 @section Scripts {
     @{

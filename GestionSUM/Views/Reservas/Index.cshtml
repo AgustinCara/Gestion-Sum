@@ -8,6 +8,8 @@
 }
 
 @* <h1>Reservas del SUM</h1> *@
+<div class="container-fluid px-4 px-md-5 mt-5">
+
 <div class="card bg-success text-white shadow-sm mb-4">
     <div class="card-body text-center">
         <h1 class="fw-bolder mb-1">Listado de Reservas</h1>
@@ -18,7 +20,8 @@
     <div class="card-body text-center">
 
         <a asp-action="Create" 
-        class="btn btn-success btn m-3">
+        class="btn btn-success rounded-pill px-4 shadow-sm hover-lift">
+        <i class="bi bi-info-circle me-2"></i>
         📅 Nueva Reserva
             </a>
 
@@ -26,7 +29,8 @@
         @if (UsuarioActual.Rol == RolUsuario.Administrador)
         {
             <a asp-action="Historial"
-               class="btn btn-success btn m-3">
+                   class="btn btn-success rounded-pill px-4 shadow-sm hover-lift">
+                    <i class="bi bi-info-circle me-2"></i>
                 📄 Historial de cancelaciones
             </a>
         }
@@ -89,7 +93,14 @@
     </tbody>
 </table>
 
-<a class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Index">Volver</a>
+<a asp-area=""
+    asp-controller="Home"
+    asp-action="Index"
+    class="btn btn-outline-secondary rounded-pill px-4 shadow-sm hover-lift">
+    <i class="bi bi-info-circle me-2"></i>
+    Volver
+</a>
+</div>
 
 <style>
     body {

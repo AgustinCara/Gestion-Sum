@@ -13,6 +13,7 @@ namespace GestionSUM.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Reserva> Reservas { get; set; }
         public DbSet<Turno> Turnos { get; set; }
+        public DbSet<SumInfo> SumInfos { get; set; }
 
     }
 

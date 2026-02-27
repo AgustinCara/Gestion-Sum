@@ -1,0 +1,55 @@
+﻿@model GestionSUM.Models.SumInfo
+
+@{
+    ViewData["Title"] = "Editar información del SUM";
+}
+
+<div class="card bg-dark text-white shadow-sm mb-4">
+    <div class="card-body text-center">
+        <h2 class="fw-bold">Panel Administrador</h2>
+        <p class="mb-0">Editar contenido del SUM</p>
+    </div>
+</div>
+
+@if (TempData["Ok"] != null)
+{
+    <div class="alert alert-success">@TempData["Ok"]</div>
+}
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Información General</label>
+                <textarea asp-for="InformacionGeneral" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Capacidad</label>
+                <input asp-for="Capacidad" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Equipamiento (1 por línea)</label>
+                <textarea asp-for="Equipamiento" class="form-control" rows="5"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Reglas (1 por línea)</label>
+                <textarea asp-for="Reglas" class="form-control" rows="5"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                Guardar cambios
+            </button>
+
+            <a asp-controller="Home" asp-action="SobreElSum" class="btn btn-secondary ms-2">
+                Ver vista pública
+            </a>
+
+        </div>
+    </div>
+</form>

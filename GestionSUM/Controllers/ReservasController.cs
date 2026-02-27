@@ -34,7 +34,10 @@ namespace GestionSUM.Controllers
 
         public IActionResult Create(DateTime? fecha)
         {
+
             var reserva = new Reserva();
+
+            ViewBag.SumInfo = _context.SumInfos.FirstOrDefault();
 
             ViewBag.Usuarios = new SelectList(
                 _context.Usuarios.ToList(),
@@ -101,6 +104,8 @@ namespace GestionSUM.Controllers
             {
                 _context.Reservas.Add(reserva);
                 _context.SaveChanges();
+                //ModelState.AddModelError("", "Turno reservado con exito.");
+
                 return RedirectToAction(nameof(Index));
             }
 

@@ -31,9 +31,31 @@ namespace GestionSUM.Controllers
             return View(proximasReservas);
         }
 
+        //public IActionResult SobreElSum()
+        //{
+        //    return View();
+        //}
+
         public IActionResult SobreElSum()
         {
-            return View();
+            var info = _context.SumInfos.FirstOrDefault();
+
+            // Si no existe todavía, la creamos
+            if (info == null)
+            {
+                info = new SumInfo
+                {
+                    InformacionGeneral = "",
+                    Capacidad = "",
+                    Equipamiento = "",
+                    Reglas = ""
+                };
+
+                _context.SumInfos.Add(info);
+                _context.SaveChanges();
+            }
+
+            return View(info);
         }
     }
 }

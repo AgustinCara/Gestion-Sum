@@ -1,18 +1,92 @@
-﻿@{
+﻿@model GestionSUM.Models.SumInfo
+@using GestionSUM.Services
+@using GestionSUM.Models
+
+@{
     ViewData["Title"] = "Sobre el SUM";
 }
-
-<div class="container">
+<div class="container-fluid px-4 px-md-5 mt-5">
 
     <!-- TÍTULO -->
     <div class="card bg-primary text-white shadow-sm mb-4">
         <div class="card-body text-center">
-            <h1 class="fw-bold mb-1">Sobre el SUM</h1>
+            <h1 class="fw-bold mb-1">Info SUM</h1>
             <p class="mb-0">Información general, equipamiento y reglamento</p>
         </div>
     </div>
 
-    <!-- INFO GENERAL -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            @if (UsuarioActual.Rol == RolUsuario.Administrador)
+            {
+                <a asp-controller="AdminSum"
+                   asp-action="Edit"
+                   class="btn btn-outline-secondary rounded-pill px-4 shadow-sm hover-lift">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Editar
+                </a>
+            }
+        </div>
+
+        <div>
+            <a asp-area=""
+               asp-controller="Home"
+               asp-action="Index"
+                class="btn btn-outline-secondary rounded-pill px-4 shadow-sm hover-lift">
+                <i class="bi bi-info-circle me-2"></i>
+                Volver
+            </a>
+        </div>
+    </div>
+
+
+<!-- INFO GENERAL -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h4 class="fw-bold mb-3">🏢 Información General</h4>
+
+        <p>@Model.InformacionGeneral</p>
+
+        <ul>
+            <li><strong>Capacidad:</strong> @Model.Capacidad</li>
+            <li><strong>Horarios:</strong> Turno dia 10:00  a 18:00. Turno noche 19:00 a 02:00.</li>
+            <li><strong>Días disponibles:</strong> Lunes a Domingo</li>
+            <li><strong>Reservas:</strong> Con mínimo 6 horas de anticipación</li>
+            <li><strong>Cancelaciones:</strong> Con mínimo 2 horas de anticipación</li>
+        </ul>
+    </div>
+</div>
+
+<!-- EQUIPAMIENTO -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h4 class="fw-bold mb-3">🪑 Equipamiento Disponible</h4>
+
+        <ul>
+            @foreach (var Equipamiento in Model.Equipamiento.Split('\n'))
+            {
+                <li>@Equipamiento</li>
+            }
+        </ul>
+    </div>
+</div>
+
+<!-- REGLAS -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h4 class="fw-bold mb-3">📜 Reglas de Uso</h4>
+
+        <ul>
+            @foreach (var regla in Model.Reglas.Split('\n'))
+            {
+                <li>@regla</li>
+            }
+        </ul>
+    </div>
+</div>
+
+
+   @*  <!-- INFO GENERAL -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h4 class="fw-bold mb-3">🏢 Información General</h4>
@@ -59,7 +133,7 @@
                 <li>Los daños ocasionados serán responsabilidad del solicitante.</li>
             </ul>
         </div>
-    </div>
+    </div> *@
 
     <!-- GALERÍA -->
     <div class="card shadow-sm mb-5">
