@@ -1,0 +1,60 @@
+﻿@using GestionSUM.Services
+@using GestionSUM.Models
+
+@model IEnumerable<GestionSUM.Models.Reserva>
+
+<div class="container-fluid px-4 px-md-5 mt-5">
+
+    <div class="card bg-success text-white shadow-sm mb-4">
+        <div class="card-body text-center">
+            <h1 class="fw-bolder mb-1">Historial de reservas</h1>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Turno</th>
+                <th>Usuario</th>
+                <th>Dpto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td>@r.Fecha.ToShortDateString()</td>
+
+                    <td>
+                        @r.Turno?.MomentoDelDia
+                        <br />
+                        <small class="text-muted">
+                            (@r.Turno?.HoraInicio - @r.Turno?.HoraFin)
+                        </small>
+                    </td>
+
+                    <td>@r.Usuario?.Nombre</td>
+                    <td>@r.Usuario?.Departamento</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-area=""
+       asp-controller="Reservas"
+       asp-action="Index"
+       class="btn btn-outline-secondary rounded-pill px-4 shadow-sm hover-lift">
+        <i class="bi bi-info-circle me-2"></i>
+        Volver
+    </a>
+
+</div>
+
+<style>
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f4f6f9, #e9ecef);
+    }
+</style>

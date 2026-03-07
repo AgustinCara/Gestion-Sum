@@ -19,11 +19,12 @@ namespace GestionSUM.Controllers
         // GET: Reservas
         public async Task<IActionResult> Index()
         {
-
+            var hoy = DateTime.Today;
             var reservas = _context.Reservas
                 .Include(r => r.Turno)
                 .Include(r => r.Usuario)
-                .Where(r => !r.Cancelada);
+                .Where(r => !r.Cancelada)
+                .Where(r => r.Fecha >= hoy);
 
             return View(await reservas.ToListAsync());
 
@@ -32,12 +33,16 @@ namespace GestionSUM.Controllers
         // GET: Reservas/Create
 
 
-        public IActionResult Create(DateTime? fecha)
+        public IActionResult Create(DateTime? fecha, string origen)
         {
 
             var reserva = new Reserva();
 
+            ViewBag.Origen = origen;
+
             ViewBag.SumInfo = _context.SumInfos.FirstOrDefault();
+
+            reserva.Fecha = fecha ?? DateTime.Today;
 
             ViewBag.Usuarios = new SelectList(
                 _context.Usuarios.ToList(),
@@ -236,39 +241,86 @@ namespace GestionSUM.Controllers
             return View(reservasCanceladas);
         }
 
+        public async Task<IActionResult> HistorialReservas()
+        {
+            var reservas = _context.Reservas
+                .Include(r => r.Turno)
+                .Include(r => r.Usuario)
+                .Where(r => !r.Cancelada)
+                .OrderByDescending(r => r.Fecha);
+
+            return View(await reservas.ToListAsync());
+
+        }
+
 
         public IActionResult Calendario()
         {
             return View();
         }
 
+
         public async Task<IActionResult> ReservasCalendario()
         {
             var reservas = await _context.Reservas
                 .Include(r => r.Usuario)
                 .Include(r => r.Turno)
-                .Where(r => !r.Cancelada)
+                .Where(r => !r.Cancelada && r.Turno != null) 
                 .ToListAsync();
 
-            var eventos = reservas.Select(r => new
-            {
-                id = r.Id,
-                title = UsuarioActual.Rol == RolUsuario.Administrador
-                    ? $"{r.Usuario.Nombre} ({r.Usuario.Departamento})"
-                    : "Reservado",
+             //Transformación 
+            var eventos = reservas.Select(r => {
+                DateTime inicio = r.Fecha.Date.Add(r.Turno.HoraInicio);
+                DateTime fin = r.Fecha.Date.Add(r.Turno.HoraFin);
 
-                start = (r.Fecha.Date + r.Turno.HoraInicio)
-                    .ToString("yyyy-MM-ddTHH:mm:ss"),
+                if (r.Turno.HoraFin < r.Turno.HoraInicio)
+                    fin = fin.AddDays(1);
 
-                end = (r.Fecha.Date + r.Turno.HoraFin)
-                    .ToString("yyyy-MM-ddTHH:mm:ss"),
+                string titulo = UsuarioActual.Rol == RolUsuario.Administrador
+                    ? $"{(r.Usuario?.Nombre ?? "S/N")} ({(r.Usuario?.Departamento ?? "S/D")})"
+                    : "Reservado";
 
-                color = "#dc3545"
+                return new
+                {
+                    id = r.Id,
+                    title = titulo,
+                    start = inicio.ToString("yyyy-MM-ddTHH:mm:ss"), 
+                    end = fin.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    color = "#dc3545",
+                    allDay = false
+                };
             });
-
 
             return Json(eventos);
         }
+
+        //public async Task<IActionResult> ReservasCalendario()
+        //{
+        //    var reservas = await _context.Reservas
+        //        .Include(r => r.Usuario)
+        //        .Include(r => r.Turno)
+        //        .Where(r => !r.Cancelada)
+        //        .ToListAsync();
+
+        //    var eventos = reservas.Select(r => new
+        //    {
+        //        id = r.Id,
+        //        title = UsuarioActual.Rol == RolUsuario.Administrador
+        //            ? $"{r.Usuario.Nombre} ({r.Usuario.Departamento})"
+        //            : "Reservado",
+
+        //        start = (r.Fecha.Date + r.Turno.HoraInicio)
+        //            .ToString("yyyy-MM-ddTHH:mm:ss"),
+
+        //        end = (r.Fecha.Date + r.Turno.HoraFin)
+        //            .ToString("yyyy-MM-ddTHH:mm:ss"),
+
+        //        color = "#dc3545"
+        //    });
+
+
+        //    return Json(eventos);
+        //}
 
     }
 }

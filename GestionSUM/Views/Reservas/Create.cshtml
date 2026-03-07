@@ -1,112 +1,180 @@
 ﻿@model GestionSUM.Models.Reserva
-
-
-
+@using GestionSUM.Services
 
 @{
     ViewData["Title"] = "Nueva Reserva";
-}
-
-@* <h1>Nueva Reserva</h1> *@
-<div class="container-fluid px-4 px-md-5 mt-5">
-
-<div class="card bg-primary text-white shadow-sm mb-4">
-    <div class="card-body text-center">
-        <h1 class="fw-bold mb-1">Nueva Reserva</h1>
-    </div>
-</div>
-
-
-@* <div class="card shadow-sm mb-4">
-    <div class="card-body">
-        <h4 class="fw-bold mb-3">🏢 Información General</h4>
-        <ul>
-            <li><strong>Capacidad:</strong> Hasta 40 personas</li>
-            <li><strong>Horarios:</strong> Turno dia 10:00  a 18:00. Turno noche 19:00 a 02:00.</li>
-            <li><strong>Días disponibles:</strong> Lunes a Domingo</li>
-            <li><strong>Reservas:</strong> Deben realizarse con minimo 6 horas de anticipacion.</li>
-            <li><strong>Cancelaciones:</strong> Deben realizarse con minimo 2 horas de anticipación.</li>
-        </ul>
-    </div>
-</div> *@
-
-
-@{
     var sum = ViewBag.SumInfo as GestionSUM.Models.SumInfo;
 }
 
-@if (sum != null)
-{
-    <div class="card shadow-sm mb-4">
-        <div class="card-body">
-            <h4 class="fw-bold mb-3">🏢 Información General</h4>
+<div class="container-fluid px-4 px-md-5 mt-5">
 
-            <p>@sum.InformacionGeneral</p>
-
-            <ul>
-                <li><strong>Capacidad:</strong> @sum.Capacidad personas</li>
-                <li><strong>Horarios:</strong> Turno dia 10:00  a 18:00. Turno noche 19:00 a 02:00.</li>
-                <li><strong>Días disponibles:</strong> Lunes a Domingo</li>
-                <li><strong>Reservas:</strong> Con mínimo 6 horas de anticipación</li>
-                <li><strong>Cancelaciones:</strong> Con mínimo 2 horas de anticipación</li>
-            </ul>
+    <div class="card glass-card border-0 shadow-lg mb-4 animate-fade-in">
+        <div class="card-body text-center py-4">
+            <h1 class="display-5 fw-bold text-dark mb-1">Nueva Reserva</h1>
+            <p class="text-muted">Asegura tu lugar en el SUM del Edificio Monte Grande</p>
         </div>
     </div>
-}
 
-@if (ViewData.ModelState.ErrorCount > 0)
-{
-    <div class="alert alert-danger">
-        @* @Html.ValidationSummary(true, "", new { @class = "text-danger" }) *@
-        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="row g-4">
+        <div class="col-lg-4 animate-fade-in delay-1">
+            @if (sum != null)
+            {
+                <div class="card glass-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h4 class="fw-bold mb-3 text-primary"><i class="bi bi-info-square me-2"></i>Informacion</h4>
+                        <p class="small text-muted mb-4">@sum.InformacionGeneral</p>
+
+                        <ul class="list-unstyled">
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="bi bi-people-fill text-dark me-3 fs-4"></i>
+                                <div><strong>Capacidad:</strong><br><span class="text-muted">@sum.Capacidad</span></div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="bi bi-clock-history text-dark me-3 fs-4"></i>
+                                <div><strong>Horarios:</strong><br><span class="text-muted">Mañana: 10:00 - 18:00 | Noche: 19:00 - 02:00</span></div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="bi bi-shield-check text-dark me-3 fs-4"></i>
+                                <div><strong>Dias disponibles:</strong><br><span class="text-muted">Lunes a domingos</span></div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="bi bi-shield-check text-dark me-3 fs-4"></i>
+                                <div><strong>Antelación:</strong><br><span class="text-muted">Mínimo 6 horas antes</span></div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="bi bi-shield-check text-dark me-3 fs-4"></i>
+                                <div><strong>Cancelacion:</strong><br><span class="text-muted">Mínimo 2 horas antes</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-lg-8 animate-fade-in delay-2">
+            <div class="card glass-card border-0 shadow-lg p-3 p-md-4">
+
+                @if (ViewData.ModelState.ErrorCount > 0)
+                {
+                    <div class="alert alert-danger rounded-4 shadow-sm border-0">
+                        <i class="bi bi-exclamation-circle-fill me-2"></i>
+                        @Html.ValidationSummary(false, "Por favor, corrija los siguientes errores:", new { @class = "mb-0 small" })
+                    </div>
+                }
+
+                <form asp-action="Create" method="post">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label asp-for="Fecha" class="form-label fw-bold text-dark">Fecha del Evento</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0 rounded-start-pill"><i class="bi bi-calendar-event text-primary"></i></span>
+                                <input asp-for="Fecha" type="date" class="form-control border-start-0 rounded-end-pill ps-0" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                            </div>
+                            <span asp-validation-for="Fecha" class="text-danger small ms-2"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="TurnoId" class="form-label fw-bold text-dark">Turno</label>
+                            <select asp-for="TurnoId" asp-items="ViewBag.Turnos" class="form-select rounded-pill shadow-sm">
+                                <option value="">-- Seleccionar --</option>
+                            </select>
+                            <span asp-validation-for="TurnoId" class="text-danger small ms-2"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="UsuarioId" class="form-label fw-bold text-dark">Usuario Responsable</label>
+                            <select asp-for="UsuarioId" asp-items="ViewBag.Usuarios" class="form-select rounded-pill shadow-sm">
+                                <option value="">-- Seleccionar --</option>
+                            </select>
+                            <span asp-validation-for="UsuarioId" class="text-danger small ms-2"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-3 mt-5">
+                        <button type="submit" class="btn btn-primary rounded-pill px-5 shadow-sm hover-lift">
+                            <i class="bi bi-check-circle me-2"></i> Confirmar Reserva
+                        </button>
+
+                        <a asp-action="@(ViewBag.Origen == "calendario" ? "Calendario" : "Index")"
+                           class="btn btn-outline-secondary rounded-pill px-4 hover-lift">
+                            <i class="bi bi-arrow-left me-2"></i> Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-}
-
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Fecha"></label>
-        @* <input asp-for="Fecha" class="form-control" type="date" /> *@
-        <input asp-for="Fecha" type="date" class="form-control" />
-        <span asp-validation-for="Fecha" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="TurnoId">Turno</label>
-        <select asp-for="TurnoId"
-                asp-items="ViewBag.Turnos"
-                class="form-control">
-            <option value="">-- Seleccionar --</option>
-        </select>
-        <span asp-validation-for="TurnoId" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="UsuarioId">Usuario</label>
-        <select asp-for="UsuarioId"
-                asp-items="ViewBag.Usuarios"
-                class="form-control">
-            <option value="">-- Seleccionar --</option>
-        </select>
-        <span asp-validation-for="UsuarioId" class="text-danger"></span>
-    </div>
-
-    <br />
-
-    <button type="submit" class="btn btn-primary">Reservar</button>
-    <a asp-action="Calendario" class="btn btn-secondary">Volver</a>
-</form>
 </div>
+
+<style>
+    body {
+        background: radial-gradient(circle at top right, #f8f9fa, #e2e8f0);
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        min-height: 100vh;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.7) !important;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        border-radius: 1.25rem !important;
+    }
+
+    .form-control, .form-select {
+        padding: 0.75rem 1.25rem;
+        border: 1px solid #dee2e6;
+        transition: all 0.2s ease;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+            background-color: white;
+        }
+
+    .input-group-text {
+        padding-left: 1.25rem;
+    }
+
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .hover-lift:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+
+    /* Animaciones */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in {
+        opacity: 0;
+        animation: fadeIn 0.7s ease-out forwards;
+    }
+
+    .delay-1 {
+        animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.2s;
+    }
+</style>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
-
 }
-<style>
-    body {
-        min-height: 100vh;
-        background: linear-gradient(135deg, #f4f6f9, #e9ecef);
-    }
-</style>

@@ -2,49 +2,42 @@
     ViewData["Title"] = "Calendario del SUM";
 }
 
-@* <h2>Calendario del SUM</h2> *@
 <div class="container-fluid px-4 px-md-5 mt-5">
 
-<div class="card bg-success text-white shadow-sm mb-4">
-    <div class="card-body text-center">
-        <h1 class="fw-bolder mb-1">Calendario de Reservas</h1>
-    </div>
-</div>
-
-<div id="calendar"></div>
-
-
-    <a class="btn btn-secondary" 
-        asp-area="" 
-        asp-controller="Home" 
-        asp-action="Index">
-        Volver
-    </a>
-
-<!-- Modal info reserva -->
-@* REVISAR PORQUE NO ABRE SIEMPRE EL MODAL *@
-<div class="modal fade" id="reservaModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title">Reserva del SUM</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body">
-                <p id="modalContenido"></p>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Cerrar
-                </button>
-            </div>
-
+    <div class="card glass-card border-0 shadow-lg mb-4 animate-fade-in">
+        <div class="card-body text-center py-4">
+            <h1 class="display-5 fw-bold text-dark mb-0">Calendario de Reservas</h1>
+            <div class="h5 text-muted fw-light">Edificio Monte Grande</div>
         </div>
     </div>
-</div>
+
+    <div class="card glass-card border-0 shadow-lg p-4 mb-4 animate-fade-in delay-1 rounded-4">
+        <div id="calendar"></div>
+    </div>
+
+    <div class="mt-4 animate-fade-in delay-3">
+        <a asp-controller="Home" asp-action="Index"
+           class="btn btn-link text-decoration-none text-muted hover-lift">
+            <i class="bi bi-arrow-left me-2"></i> Volver al Inicio
+        </a>
+    </div>
+
+    <div class="modal fade" id="reservaModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-dark text-white rounded-top-4">
+                    <h5 class="modal-title fw-bold">Detalle de la Reserva</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-secondary">
+                    <div id="modalContenido"></div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
@@ -53,67 +46,73 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-
             var calendarEl = document.getElementById('calendar');
-
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 locale: 'es',
                 height: 'auto',
-
                 headerToolbar: {
                     left: 'title',
-                    right: 'prev,next'
+                    right: 'prev,next today'
                 },
-
-                titleformat: {
-                    year: 'numeric',
-                    month: 'long'
+                buttonText: {
+                    today: 'Hoy'
                 },
-
-                // titleDidMount: function (arg) {
-                //       arg.el.innerText = arg.el.innerText.replace(' de ', ' ').toUpperCase();
-                //   },
-
                 validRange: {
                     start: new Date().toISOString().split('T')[0]
-                 },
-
-                // Click en día libre
-                dateClick: function (info) {
-                    window.location.href =
-                        '/Reservas/Create?fecha=' + info.dateStr;
                 },
+                dateClick: function (info) {
+                    window.location.href = '/Reservas/Create?fecha=' + info.dateStr + '&origen=calendario';
+                },
+                nextDayThreshold: '09:00:00', // ayuda a mostrar eventos nocturnos
+                eventDisplay: 'block',
 
-                // Click en reserva ocupada
                 eventClick: function (info) {
                     info.jsEvent.preventDefault();
 
+                    const modalElement = document.getElementById('reservaModal');
+                    const modalExistente = bootstrap.Modal.getInstance(modalElement);
+                    if (modalExistente) { modalExistente.dispose(); }
+
                     let evento = info.event;
 
-                    let contenido =
-                        '<strong>Fecha:</strong> ' + evento.start.toLocaleDateString() + '<br>' +
-                        '<strong>Horario:</strong> ' +
-                        evento.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
-                        ' - ' +
-                        evento.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
-                        '<br><br>' +
-                        '<strong>Estado:</strong> OCUPADO<br><br>' +
-                        evento.title;
+                    // Formateo de fechas que contempla el cambio de día
+                    let fechaInicio = evento.start.toLocaleDateString();
+                    let fechaFin = evento.end ? evento.end.toLocaleDateString() : fechaInicio;
+
+                    let horaInicio = evento.start.toLocaleTimeString('es-AR', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    });
+
+                    let horaFin = evento.end ? evento.end.toLocaleTimeString('es-AR', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    }) : '--:--';
+
+                    let contenido = `
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-clock-history fs-2 me-3 text-primary"></i>
+                            <div>
+                                <div class="fw-bold text-dark">${fechaInicio}</div>
+                                <div class="text-muted small">
+                                    ${horaInicio}  hasta ${horaFin}  ${fechaInicio !== fechaFin ? '' : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="p-3 bg-light rounded-3 border-start border-4 border-danger">
+                            <strong>Ocupado por:</strong><br>
+                            ${evento.title}
+                        </div>`;
 
                     document.getElementById('modalContenido').innerHTML = contenido;
-
-                    var modal = new bootstrap.Modal(
-                        document.getElementById('reservaModal')
-                    );
-
-                    modal.show();
+                    new bootstrap.Modal(modalElement).show();
                 },
-
-
                 events: '/Reservas/ReservasCalendario'
             });
-
             calendar.render();
         });
     </script>
@@ -121,26 +120,81 @@
 
 <style>
     body {
+        background: radial-gradient(circle at top right, #f8f9fa, #e2e8f0);
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         min-height: 100vh;
-        background: linear-gradient(135deg, #f4f6f9, #e9ecef);
-    }
-    /* Bordes del calendario */
-    .fc-theme-standard td,
-    .fc-theme-standard th {
-        border: 2px solid #dee2e6; /* grosor y color */
     }
 
-    /* Separación entre semanas */
-    .fc-theme-standard .fc-scrollgrid {
-        border: 2px solid #adb5bd;
+    /* Efecto Glassmorphism */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.6) !important;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
     }
 
-    /* Bordes de cada día */
-    .fc-daygrid-day-frame {
-        border: 2px solid #adb5bd;
+    /* Estilización de FullCalendar para que sea moderno */
+    .fc {
+        --fc-border-color: rgba(0,0,0,0.05);
+        --fc-button-bg-color: #212529;
+        --fc-button-border-color: #212529;
+        --fc-button-hover-bg-color: #424649;
+        --fc-event-bg-color: #dc3545;
+        --fc-event-border-color: #dc3545;
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
     }
 
     .fc-toolbar-title {
-        font-family: 'Poppins', sans-serif;
+        font-size: 1.5rem !important;
+        font-weight: 700 !important;
+        color: #343a40;
+        text-transform: capitalize;
+    }
+
+    .fc-daygrid-day:hover {
+        background-color: rgba(0,0,0,0.02);
+        cursor: pointer;
+    }
+
+    .fc-day-today {
+        background: rgba(13, 110, 253, 0.05) !important;
+    }
+
+    /* Animación de botones */
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .hover-lift:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+
+    /* --- ANIMACIONES --- */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in {
+        opacity: 0;
+        animation: fadeIn 0.7s ease-out forwards;
+    }
+
+    .delay-1 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.4s;
     }
 </style>
