@@ -28,9 +28,9 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Nombre</td>
+                <td>@item.NombreCompleto</td>
                 <td>@item.Departamento</td>
-                <td>@item.Rol</td>
+                @* <td>@item.Rol</td> *@
 
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |

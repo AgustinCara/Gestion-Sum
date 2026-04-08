@@ -1,75 +1,83 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using GestionSUM.Data;
+﻿using GestionSUM.Data;
 using GestionSUM.Models;
 using GestionSUM.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace GestionSUM.Controllers
 {
+    [Authorize]
     public class ReservasController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<Usuario> _userManager;
 
-        public ReservasController(AppDbContext context)
+        public ReservasController(AppDbContext context, UserManager<Usuario> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // GET: Reservas
-        public async Task<IActionResult> Index()
+        // GET: Reservas
+        public async Task<IActionResult> Index()
         {
             var hoy = DateTime.Today;
             var reservas = _context.Reservas
-                .Include(r => r.Turno)
-                .Include(r => r.Usuario)
-                .Where(r => !r.Cancelada)
-                .Where(r => r.Fecha >= hoy);
+              .Include(r => r.Turno)
+              .Include(r => r.Usuario)
+              .Where(r => !r.Cancelada)
+              .Where(r => r.Fecha >= hoy);
 
             return View(await reservas.ToListAsync());
 
         }
 
-        // GET: Reservas/Create
+        // GET: Reservas/Create
 
 
-        public IActionResult Create(DateTime? fecha, string origen)
+        public IActionResult Create(DateTime? fecha, string origen)
         {
-
             var reserva = new Reserva();
-
             ViewBag.Origen = origen;
-
             ViewBag.SumInfo = _context.SumInfos.FirstOrDefault();
 
             reserva.Fecha = fecha ?? DateTime.Today;
 
-            ViewBag.Usuarios = new SelectList(
-                _context.Usuarios.ToList(),
-                "Id",
-                "Nombre",
-                reserva.UsuarioId
-            );
+
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (int.TryParse(userIdString, out int userIdInt))
+            {
+                var usuarioLogueado = _context.Users.Where(u => u.Id == userIdInt).ToList();
+
+                ViewBag.Usuarios = new SelectList(
+                    usuarioLogueado,
+                    "Id",
+                    "NombreCompleto",
+                    userIdInt
+                );
+            }
 
             ViewBag.Turnos = new SelectList(
-                _context.Turnos.ToList(),
-                "Id",
-                "MomentoDelDia",
-                reserva.TurnoId
+              _context.Turnos.ToList(),
+              "Id",
+              "MomentoDelDia",
+              reserva.TurnoId
             );
-
-            //var reserva = new Reserva();
 
             if (fecha.HasValue)
                 reserva.Fecha = fecha.Value;
 
-
             return View(reserva);
         }
 
-        // POST: Reservas/Create
+        // POST: Reservas/Create
 
-        [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Reserva reserva)
         {
@@ -79,8 +87,8 @@ namespace GestionSUM.Controllers
                 ModelState.AddModelError("", "No se pueden crear reservas en fechas pasadas.");
             }
 
-            // Obtener el turno para conocer la hora
-            var turno = _context.Turnos.FirstOrDefault(t => t.Id == reserva.TurnoId);
+            // Obtener el turno para conocer la hora
+            var turno = _context.Turnos.FirstOrDefault(t => t.Id == reserva.TurnoId);
 
             if (turno != null)
             {
@@ -95,9 +103,9 @@ namespace GestionSUM.Controllers
 
 
             bool ocupado = _context.Reservas.Any(r =>
-                r.Fecha == reserva.Fecha &&
-                r.TurnoId == reserva.TurnoId &&
-                !r.Cancelada
+              r.Fecha == reserva.Fecha &&
+              r.TurnoId == reserva.TurnoId &&
+              !r.Cancelada
             );
 
             if (ocupado)
@@ -109,26 +117,30 @@ namespace GestionSUM.Controllers
             {
                 _context.Reservas.Add(reserva);
                 _context.SaveChanges();
-                //ModelState.AddModelError("", "Turno reservado con exito.");
+                //ModelState.AddModelError("", "Turno reservado con exito.");
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Usuarios = new SelectList(_context.Usuarios, "Id", "Nombre");
-            ViewBag.Turnos = new SelectList(_context.Turnos, "Id", "MomentoDelDia");
+            ViewBag.SumInfo = _context.SumInfos.FirstOrDefault();
+
+            var usuarioLogueado = _context.Users.Where(u => u.Id == reserva.UsuarioId).ToList();
+            ViewBag.Usuarios = new SelectList(usuarioLogueado, "Id", "NombreCompleto", reserva.UsuarioId);
+
+            ViewBag.Turnos = new SelectList(_context.Turnos.ToList(), "Id", "MomentoDelDia", reserva.TurnoId);
 
             return View(reserva);
         }
 
 
 
-        //GET cancelar reservas
-        public async Task<IActionResult> Delete(int id)
+        //GET cancelar reservas
+        public async Task<IActionResult> Delete(int id)
         {
             var reserva = await _context.Reservas
-                .Include(r => r.Turno)
-                .Include(r => r.Usuario)
-                .FirstOrDefaultAsync(r => r.Id == id);
+              .Include(r => r.Turno)
+              .Include(r => r.Usuario)
+              .FirstOrDefaultAsync(r => r.Id == id);
 
 
             if (reserva == null)
@@ -142,10 +154,10 @@ namespace GestionSUM.Controllers
                 }
 
                 var inicioReserva =
-                    reserva.Fecha.Date + reserva.Turno.HoraInicio;
+                  reserva.Fecha.Date + reserva.Turno.HoraInicio;
 
                 var horasFaltantes =
-                    (inicioReserva - DateTime.Now).TotalHours;
+                  (inicioReserva - DateTime.Now).TotalHours;
 
 
                 if (horasFaltantes < 2)
@@ -165,22 +177,15 @@ namespace GestionSUM.Controllers
         public async Task<IActionResult> Delete(int id, string motivoCancelacion)
         {
             var reserva = await _context.Reservas
-                .Include(r => r.Turno)
-                .FirstOrDefaultAsync(r => r.Id == id);
+              .Include(r => r.Turno)
+              .FirstOrDefaultAsync(r => r.Id == id);
 
 
             if (reserva == null)
                 return NotFound();
 
-            //if (
-            //    UsuarioActual.Rol != RolUsuario.Administrador &&
-            //    reserva.UsuarioId != UsuarioActual.UsuarioId
-            //)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
 
-            if (UsuarioActual.Rol != RolUsuario.Administrador)
+            if (UsuarioActual.Rol != RolUsuario.Administrador)
             {
                 if (reserva.UsuarioId != UsuarioActual.UsuarioId)
                 {
@@ -188,10 +193,10 @@ namespace GestionSUM.Controllers
                 }
 
                 var inicioReserva =
-                    reserva.Fecha.Date + reserva.Turno.HoraInicio;
+                  reserva.Fecha.Date + reserva.Turno.HoraInicio;
 
                 var horasFaltantes =
-                    (inicioReserva - DateTime.Now).TotalHours;
+                  (inicioReserva - DateTime.Now).TotalHours;
 
 
                 if (horasFaltantes < 2)
@@ -224,19 +229,19 @@ namespace GestionSUM.Controllers
             var finMes = inicioMes.AddMonths(1);
 
             ViewBag.ReservasCanceladasMes = _context.Reservas
-                .Count(r =>
-                    r.Fecha >= inicioMes &&
-                    r.Fecha < finMes &&
-                    r.Cancelada
-                );
+              .Count(r =>
+                r.Fecha >= inicioMes &&
+                r.Fecha < finMes &&
+                r.Cancelada
+              );
 
 
             var reservasCanceladas = await _context.Reservas
-                .Include(r => r.Usuario)
-                .Include(r => r.Turno)
-                .Where(r => r.Cancelada)
-                .OrderByDescending(r => r.FechaCancelacion)
-                .ToListAsync();
+              .Include(r => r.Usuario)
+              .Include(r => r.Turno)
+              .Where(r => r.Cancelada)
+              .OrderByDescending(r => r.FechaCancelacion)
+              .ToListAsync();
 
             return View(reservasCanceladas);
         }
@@ -244,10 +249,10 @@ namespace GestionSUM.Controllers
         public async Task<IActionResult> HistorialReservas()
         {
             var reservas = _context.Reservas
-                .Include(r => r.Turno)
-                .Include(r => r.Usuario)
-                .Where(r => !r.Cancelada)
-                .OrderByDescending(r => r.Fecha);
+              .Include(r => r.Turno)
+              .Include(r => r.Usuario)
+              .Where(r => !r.Cancelada)
+              .OrderByDescending(r => r.Fecha);
 
             return View(await reservas.ToListAsync());
 
@@ -263,12 +268,12 @@ namespace GestionSUM.Controllers
         public async Task<IActionResult> ReservasCalendario()
         {
             var reservas = await _context.Reservas
-                .Include(r => r.Usuario)
-                .Include(r => r.Turno)
-                .Where(r => !r.Cancelada && r.Turno != null) 
-                .ToListAsync();
+              .Include(r => r.Usuario)
+              .Include(r => r.Turno)
+              .Where(r => !r.Cancelada && r.Turno != null)
+              .ToListAsync();
 
-             //Transformación 
+            //Transformación 
             var eventos = reservas.Select(r => {
                 DateTime inicio = r.Fecha.Date.Add(r.Turno.HoraInicio);
                 DateTime fin = r.Fecha.Date.Add(r.Turno.HoraFin);
@@ -277,14 +282,14 @@ namespace GestionSUM.Controllers
                     fin = fin.AddDays(1);
 
                 string titulo = UsuarioActual.Rol == RolUsuario.Administrador
-                    ? $"{(r.Usuario?.Nombre ?? "S/N")} ({(r.Usuario?.Departamento ?? "S/D")})"
-                    : "Reservado";
+                  ? $"{(r.Usuario?.NombreCompleto ?? "S/N")} ({(r.Usuario?.Departamento ?? "S/D")})"
+                  : "Reservado";
 
                 return new
                 {
                     id = r.Id,
                     title = titulo,
-                    start = inicio.ToString("yyyy-MM-ddTHH:mm:ss"), 
+                    start = inicio.ToString("yyyy-MM-ddTHH:mm:ss"),
                     end = fin.ToString("yyyy-MM-ddTHH:mm:ss"),
                     color = "#dc3545",
                     allDay = false
@@ -294,33 +299,5 @@ namespace GestionSUM.Controllers
             return Json(eventos);
         }
 
-        //public async Task<IActionResult> ReservasCalendario()
-        //{
-        //    var reservas = await _context.Reservas
-        //        .Include(r => r.Usuario)
-        //        .Include(r => r.Turno)
-        //        .Where(r => !r.Cancelada)
-        //        .ToListAsync();
-
-        //    var eventos = reservas.Select(r => new
-        //    {
-        //        id = r.Id,
-        //        title = UsuarioActual.Rol == RolUsuario.Administrador
-        //            ? $"{r.Usuario.Nombre} ({r.Usuario.Departamento})"
-        //            : "Reservado",
-
-        //        start = (r.Fecha.Date + r.Turno.HoraInicio)
-        //            .ToString("yyyy-MM-ddTHH:mm:ss"),
-
-        //        end = (r.Fecha.Date + r.Turno.HoraFin)
-        //            .ToString("yyyy-MM-ddTHH:mm:ss"),
-
-        //        color = "#dc3545"
-        //    });
-
-
-        //    return Json(eventos);
-        //}
-
-    }
+    }
 }

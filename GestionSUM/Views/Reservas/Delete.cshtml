@@ -10,7 +10,7 @@
 
 <ul class="list-group mb-3">
     <li class="list-group-item"><b>Fecha:</b> @Model.Fecha.ToShortDateString()</li>
-    <li class="list-group-item"><b>Usuario:</b> @Model.Usuario?.Nombre</li>
+    <li class="list-group-item"><b>Usuario:</b> @Model.Usuario?.NombreCompleto</li>
 </ul>
 
 <form asp-action="Delete" method="post">

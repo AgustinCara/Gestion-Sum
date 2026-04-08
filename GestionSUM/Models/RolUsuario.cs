@@ -2,8 +2,7 @@
 {
     public enum  RolUsuario
     {
-        Vecino = 1,
-        Administrador = 2,  
-
+        Administrador = 1,
+        Vecino = 2,
     }
 }

@@ -1,11 +1,13 @@
-using System.Diagnostics;
+using GestionSUM.Data;
 using GestionSUM.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GestionSUM.Data;
+using System.Diagnostics;
 
 namespace GestionSUM.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly AppDbContext _context;
@@ -31,16 +33,12 @@ namespace GestionSUM.Controllers
             return View(proximasReservas);
         }
 
-        //public IActionResult SobreElSum()
-        //{
-        //    return View();
-        //}
+
 
         public IActionResult SobreElSum()
         {
             var info = _context.SumInfos.FirstOrDefault();
 
-            // Si no existe todavía, la creamos
             if (info == null)
             {
                 info = new SumInfo

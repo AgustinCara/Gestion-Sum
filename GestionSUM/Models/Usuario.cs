@@ -1,18 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace GestionSUM.Models
 {
-    public class Usuario
+
+    public class Usuario : IdentityUser<int>
     {
-        public int Id { get; set; }
+        public string NombreCompleto { get; set; }
+        public string Departamento { get; set; }
 
-        [Required]
-        public string Nombre { get; set; } = string.Empty;
-        public string Departamento { get; set; } = string.Empty;
-
-        [Required]
         public RolUsuario Rol { get; set; }
 
     }
+
 }
