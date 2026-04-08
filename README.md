@@ -12,7 +12,7 @@
 
 | Inicio  | Calendario Interactivo |
 | :---: | :---: |
-| ![Inicio](Screenshots/Home.png) | ![Calendario]Screenshots/Calendario.png) |
+| ![Inicio](Screenshots/Home.png) | ![Calendario](Screenshots/Calendario.png) |
 
 | Nueva Reserva | Registro de Usuarios |
 | :---: | :---: |
