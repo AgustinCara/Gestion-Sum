@@ -50,15 +50,19 @@
 
 
 2. **Configurar la Base de Datos:**
+1. ```bash
    "ConnectionStrings": {
     "DefaultConnection": "server=localhost;database=sum_reservas;user=root;password=TU_PASSWORD;"
 }
 
-3. **3. Ejecutar Migraciones:**
+3. **Ejecutar Migraciones:**
+1. ```bash
     Update-Database
 
-4. **4. Ejecutar la Aplicación:**
+4. **Ejecutar la Aplicación:**
+1. ```bash
     dotnet run
 
     👤 Autor
-Agustín Carabajal Systems Professional & Full Stack Developer LinkedIn | agustin.hcarabajal@gmail.com
+Agustín Carabajal Systems Professional & Full Stack Developer
+agustin.hcarabajal@gmail.com
