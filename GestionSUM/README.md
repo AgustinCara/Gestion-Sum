@@ -12,11 +12,11 @@
 
 | Inicio  | Calendario Interactivo |
 | :---: | :---: |
-| ![Inicio](Screenshot/Home.png) | ![Calendario](Screenshot/Calendario.png) |
+| ![Inicio](wwwroot/Screenshot/Home.png) | ![Calendario](wwwroot/Screenshot/Calendario.png) |
 
 | Nueva Reserva | Registro de Usuarios |
 | :---: | :---: |
-| ![Reserva](Screenshot/NuevaReserva.png) | ![Registro](Screenshot/Registro.png) |
+| ![Reserva](wwwroot/Screenshot/NuevaReserva.png) | ![Registro](wwwroot/Screenshot/Registro.png) |
 
 ---
 
