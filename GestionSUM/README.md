@@ -10,13 +10,13 @@
 
 ## 📸 Capturas de Pantalla
 
-| Inicio y Carrusel | Calendario Interactivo |
+| Inicio  | Calendario Interactivo |
 | :---: | :---: |
-| ![Inicio](wwwroot/Screenshot/Home.png) | ![Calendario](wwwroot/Screenshot/Calendario.png) |
+| ![Inicio](Screenshot/Home.png) | ![Calendario](Screenshot/Calendario.png) |
 
-| Panel de Administración | Registro de Usuarios |
+| Nueva Reserva | Registro de Usuarios |
 | :---: | :---: |
-| ![Admin](wwwroot/Screenshot/NuevaReserva.png) | ![Registro](wwwroot/Screenshot/Registro.png) |
+| ![Reserva](Screenshot/NuevaReserva.png) | ![Registro](Screenshot/Registro.png) |
 
 ---
 
