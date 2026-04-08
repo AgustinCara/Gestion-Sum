@@ -20,8 +20,8 @@
         <tr>
             <th>Nombre</th>
             <th>Departamento</th>
-            <th>Rol</th>
-            <th></th>
+            <th>Mail</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -30,7 +30,7 @@
             <tr>
                 <td>@item.NombreCompleto</td>
                 <td>@item.Departamento</td>
-                @* <td>@item.Rol</td> *@
+                <td>@item.Email</td>
 
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
