@@ -12,11 +12,11 @@
 
 | Inicio y Carrusel | Calendario Interactivo |
 | :---: | :---: |
-| ![Inicio](img/Screenshot/Home.jpg) | ![Calendario](img/Screenshot/Calendario.png) |
+| ![Inicio](wwwroot/Screenshot/Home.png) | ![Calendario](wwwroot/Screenshot/Calendario.png) |
 
 | Panel de Administración | Registro de Usuarios |
 | :---: | :---: |
-| ![Admin](img/Screenshot/NuevaReserva.png) | ![Registro](img/Screenshot/Registro.png) |
+| ![Admin](wwwroot/Screenshot/NuevaReserva.png) | ![Registro](wwwroot/Screenshot/Registro.png) |
 
 ---
 
