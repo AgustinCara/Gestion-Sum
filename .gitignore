@@ -6,8 +6,8 @@
 # =========================
 # Build results
 # =========================
-GestionSUM/bin/
-GestionSUM/obj/
+bin/
+obj/
 
 # =========================
 # ASP.NET / .NET
@@ -27,3 +27,7 @@ GestionSUM/obj/
 # Logs / temp
 # =========================
 *.log
+
+# Configuración local de usuario y secretos
+appsettings.Development.json
+UserSecrets/

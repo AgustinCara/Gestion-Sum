@@ -15,11 +15,13 @@ namespace GestionSUM.Controllers
     {
         private readonly AppDbContext _context;
         private readonly UserManager<Usuario> _userManager;
+        private readonly IEmailService _emailService;
 
-        public ReservasController(AppDbContext context, UserManager<Usuario> userManager)
+        public ReservasController(AppDbContext context, UserManager<Usuario> userManager, IEmailService emailService)
         {
             _context = context;
             _userManager = userManager;
+            _emailService = emailService;
         }
 
         // GET: Reservas
@@ -77,18 +79,17 @@ namespace GestionSUM.Controllers
 
         // POST: Reservas/Create
 
-        [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Reserva reserva)
+        // Cambiamos a async Task para manejar el envío de mail sin bloquear el servidor
+        public async Task<IActionResult> Create(Reserva reserva)
         {
-
             if (reserva.Fecha.Date < DateTime.Today)
             {
                 ModelState.AddModelError("", "No se pueden crear reservas en fechas pasadas.");
             }
 
-            // Obtener el turno para conocer la hora
-            var turno = _context.Turnos.FirstOrDefault(t => t.Id == reserva.TurnoId);
+            var turno = _context.Turnos.FirstOrDefault(t => t.Id == reserva.TurnoId);
 
             if (turno != null)
             {
@@ -100,7 +101,6 @@ namespace GestionSUM.Controllers
                     ModelState.AddModelError("", "No se puede reservar con menos de 6 horas de anticipación.");
                 }
             }
-
 
             bool ocupado = _context.Reservas.Any(r =>
               r.Fecha == reserva.Fecha &&
@@ -116,21 +116,101 @@ namespace GestionSUM.Controllers
             if (ModelState.IsValid)
             {
                 _context.Reservas.Add(reserva);
-                _context.SaveChanges();
-                //ModelState.AddModelError("", "Turno reservado con exito.");
+                await _context.SaveChangesAsync(); // Usamos la versión asíncrona
 
-                return RedirectToAction(nameof(Index));
+                // --- LÓGICA DE ENVÍO DE MAIL ---
+                try
+                {
+                    // Buscamos el usuario para obtener su Email y Nombre
+                    var usuario = await _context.Users.FindAsync(reserva.UsuarioId);
+
+                    if (usuario != null && turno != null)
+                    {
+                        // Llamamos al servicio (asegurate de haberlo inyectado en el constructor)
+                        await _emailService.EnviarConfirmacionReservaAsync(
+                            usuario.Email,
+                            usuario.NombreCompleto,
+                            reserva.Fecha.ToShortDateString(),
+                            turno.MomentoDelDia
+                        );
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Si el mail falla, no queremos que el usuario piense que la reserva no se hizo.
+                    // La reserva YA se guardó arriba, así que solo logueamos el error.
+                    Console.WriteLine($"Error al enviar el mail: {ex.Message}");
+                }
+
+                return RedirectToAction(nameof(Index));
             }
 
+            // Si llegamos acá es porque hubo un error, recargamos los ViewBags
             ViewBag.SumInfo = _context.SumInfos.FirstOrDefault();
 
             var usuarioLogueado = _context.Users.Where(u => u.Id == reserva.UsuarioId).ToList();
             ViewBag.Usuarios = new SelectList(usuarioLogueado, "Id", "NombreCompleto", reserva.UsuarioId);
-
             ViewBag.Turnos = new SelectList(_context.Turnos.ToList(), "Id", "MomentoDelDia", reserva.TurnoId);
 
             return View(reserva);
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Create(Reserva reserva)
+        //{
+
+        //    if (reserva.Fecha.Date < DateTime.Today)
+        //    {
+        //        ModelState.AddModelError("", "No se pueden crear reservas en fechas pasadas.");
+        //    }
+
+        //    // Obtener el turno para conocer la hora
+        //    var turno = _context.Turnos.FirstOrDefault(t => t.Id == reserva.TurnoId);
+
+        //    if (turno != null)
+        //    {
+        //        var inicioReserva = reserva.Fecha.Date + turno.HoraInicio;
+        //        var horasFaltantes = (inicioReserva - DateTime.Now).TotalHours;
+
+        //        if (horasFaltantes < 6)
+        //        {
+        //            ModelState.AddModelError("", "No se puede reservar con menos de 6 horas de anticipación.");
+        //        }
+        //    }
+
+
+        //    bool ocupado = _context.Reservas.Any(r =>
+        //      r.Fecha == reserva.Fecha &&
+        //      r.TurnoId == reserva.TurnoId &&
+        //      !r.Cancelada
+        //    );
+
+        //    if (ocupado)
+        //    {
+        //        ModelState.AddModelError("", "Ese turno ya está reservado para ese día.");
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Reservas.Add(reserva);
+        //        _context.SaveChanges();
+        //        //ModelState.AddModelError("", "Turno reservado con exito.");
+
+        //        return RedirectToAction(nameof(Index));
+        //    }
+
+        //    ViewBag.SumInfo = _context.SumInfos.FirstOrDefault();
+
+        //    var usuarioLogueado = _context.Users.Where(u => u.Id == reserva.UsuarioId).ToList();
+        //    ViewBag.Usuarios = new SelectList(usuarioLogueado, "Id", "NombreCompleto", reserva.UsuarioId);
+
+        //    ViewBag.Turnos = new SelectList(_context.Turnos.ToList(), "Id", "MomentoDelDia", reserva.TurnoId);
+
+        //    return View(reserva);
+        //}
+
+
 
 
 
@@ -169,6 +249,8 @@ namespace GestionSUM.Controllers
 
             return View(reserva);
         }
+
+
 
 
 

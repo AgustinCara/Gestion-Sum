@@ -30,6 +30,8 @@ builder.Services.AddIdentity<Usuario, IdentityRole<int>>(options => {
 .AddDefaultTokenProviders()
 .AddErrorDescriber<SpanishIdentityErrorDescriber>();
 
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 // IMPORTANTE: Para que UsuarioActual pueda leer la sesión
 builder.Services.AddHttpContextAccessor();
 
