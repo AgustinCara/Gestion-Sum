@@ -64,7 +64,7 @@
     ```bash
    "ConnectionStrings": {
     "DefaultConnection": "server=localhost;database=sum_reservas;user=root;password=TU_PASSWORD;"
-}
+    }
 
 4. **Ejecutar Migraciones:**
     ```bash
