@@ -51,15 +51,14 @@
    git clone [https://github.com/tu-usuario/GestionSUM.git](https://github.com/tu-usuario/GestionSUM.git)
 
 2. **Configurar Secretos (appsettings.json):**
-    ```bash
-  "ConnectionStrings": {
-    "DefaultConnection": "server=localhost;database=sum_reservas;user=root;password=TU_PASSWORD;"
-  }
-  "EmailSettings": {
-    "SmtpUser": "TU_USUARIO_BREVO",
-    "SmtpPass": "TU_MASTER_PASSWORD"
-  }
-
+   ```bash
+      "ConnectionStrings": {
+        "DefaultConnection": "server=localhost;database=sum_reservas;user=root;password=TU_PASSWORD;"
+      }
+      "EmailSettings": {
+        "SmtpUser": "TU_USUARIO_BREVO",
+        "SmtpPass": "TU_MASTER_PASSWORD"
+      }
 
 3. **Configurar la Base de Datos:**
     ```bash
