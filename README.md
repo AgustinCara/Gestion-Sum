@@ -24,6 +24,7 @@
 ## 🚀 Características Principales
 
 - **Gestión de Roles Dinámica:** Control de acceso basado en roles (**Administradores** y **Vecinos**) mediante **ASP.NET Core Identity**.
+- **Configuración de Espacios Dinámica: Incluye un módulo administrativo para gestionar la información del SUM (precios, capacidad y reglamentos) sin necesidad de modificar el código o la base de datos manualmente**.
 - **Calendario Interactivo:** Visualización de disponibilidad en tiempo real integrada con la API de **FullCalendar**.
 - **Notificaciones Transaccionales:** Envío automatizado de confirmaciones de reserva por email mediante **Brevo (SMTP Relay)** y **MailKit**, con plantillas HTML personalizadas.
 - **Reglas de Negocio Automatizadas:**
