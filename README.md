@@ -55,7 +55,6 @@
   "ConnectionStrings": {
     "DefaultConnection": "server=localhost;database=sum_reservas;user=root;password=TU_PASSWORD;"
   }
-   ```bash
   "EmailSettings": {
     "SmtpUser": "TU_USUARIO_BREVO",
     "SmtpPass": "TU_MASTER_PASSWORD"
