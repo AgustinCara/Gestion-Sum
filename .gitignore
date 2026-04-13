@@ -29,5 +29,6 @@ obj/
 *.log
 
 # Configuración local de usuario y secretos
+appsettings.json
 appsettings.Development.json
 UserSecrets/
