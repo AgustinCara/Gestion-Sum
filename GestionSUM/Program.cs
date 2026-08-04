@@ -8,13 +8,17 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Configuración de la Base de Datos (MySQL)
-var connectionString = "server=localhost;database=sum_reservas;user=root;password=1999;";
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//    options.UseSqlServer(connectionString));
+// 1. Configuración de la Base de Datos
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+Console.WriteLine($"Connection: {connectionString}");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(
-        connectionString,
-        ServerVersion.AutoDetect(connectionString)
-    )
-);
+    options.UseSqlServer(connectionString));
 
 // 2. Configuración de Identity
 builder.Services.AddIdentity<Usuario, IdentityRole<int>>(options => {
